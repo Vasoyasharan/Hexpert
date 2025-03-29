@@ -3,24 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hexpert: Master Colors Like a Pro!</title>
+    <title>Hexpert - Master Colors Like a Pro</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
     <header>
-        <h1>Hexpert</h1>
-        <p class="tagline">
-            Discover over 200 beautiful colors with their names and hex codes. 
-            Perfect for designers, artists, and anyone who wants to expand their 
-            color vocabulary and impress others with precise color knowledge!
-        </p>
+        <div class="header-content">
+            <h1>Hexpert</h1>
+            <p class="tagline">
+                Discover over 200 beautiful colors with their names and hex codes.
+                Perfect for designers, artists, and anyone who wants to expand their
+                color vocabulary and impress others with precise color knowledge!
+            </p>
+            <button id="themeToggle" class="theme-toggle">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
+        </div>
     </header>
-    
+
     <div class="search-container">
-        <input type="text" id="colorSearch" placeholder="Search colors by name or hex code...">
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="colorSearch" placeholder="Search colors by name or hex code...">
+            <i class="fas fa-times clear-search" id="clearSearch"></i>
+        </div>
     </div>
-    
+
+    <div class="main-container">
+        <!-- Tools Section -->
+        <section class="tools-section">
+            <div class="tool-card">
+                <h2><i class="fas fa-eye-dropper"></i> Color Picker</h2>
+                <div class="color-tool">
+                    <input type="color" id="colorPicker" value="#FF0000">
+                    <div class="color-info">
+                        <div class="color-property">
+                            <span class="property-label">Hex:</span>
+                            <span id="hexCode" class="property-value">#FF0000</span>
+                            <button class="copy-btn" data-target="hexCode">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="color-property">
+                            <span class="property-label">Name:</span>
+                            <span id="colorName" class="property-value">Red</span>
+                        </div>
+                        <div class="color-property">
+                            <span class="property-label">RGB:</span>
+                            <span id="rgbCode" class="property-value">255, 0, 0</span>
+                            <button class="copy-btn" data-target="rgbCode">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <h2><i class="fas fa-sliders-h"></i> Gradient Generator</h2>
+                <div class="gradient-generator">
+                    <div class="gradient-preview" id="gradientPreview"></div>
+                    <div class="gradient-controls">
+                        <div class="gradient-color-picker">
+                            <label>Color 1</label>
+                            <input type="color" id="gradientColor1" value="#FF9A9E">
+                        </div>
+                        <div class="gradient-color-picker">
+                            <label>Color 2</label>
+                            <input type="color" id="gradientColor2" value="#FAD0C4">
+                        </div>
+                        <div class="gradient-direction">
+                            <label>Direction</label>
+                            <select id="gradientDirection">
+                                <option value="to right">Horizontal</option>
+                                <option value="to bottom">Vertical</option>
+                                <option value="135deg">Diagonal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="gradient-output">
+                        <textarea id="cssOutput" readonly>background: linear-gradient(to right, #FF9A9E, #FAD0C4);</textarea>
+                        <button id="copyGradient" class="copy-gradient-btn">
+                            <i class="far fa-copy"></i> Copy CSS
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <h2><i class="fas fa-question-circle"></i> Color Quiz</h2>
+                <div class="quiz">
+                    <div class="quiz-header">
+                        <span>Score: <span id="quizScore">0</span></span>
+                        <div id="difficultyDisplay">Difficulty: ★</div>
+                        <span id="quizTimer">30s</span>
+                    </div>
+                    <div class="quiz-color" id="quizColor"></div>
+                    <div class="quiz-controls">
+                        <input type="text" id="userGuess" placeholder="Guess the color name">
+                        <button id="submitGuess" class="quiz-btn">Submit</button>
+                    </div>
+                    <p id="quizResult"></p>
+                    <button id="newQuiz" class="quiz-btn secondary">
+                        <i class="fas fa-redo"></i> New Quiz
+                    </button>
+                </div>
+            </div>
+        </section>
+
     <div class="container">
         <!-- Red Colors Section -->
         <section class="color-section">
@@ -1150,17 +1242,26 @@
         </section>
     </div>
     
-    <footer>
-        <p>© 2023 Color Master - The Ultimate Color Learning Resource</p>
-        <p>Discover, learn, and impress with your color knowledge!</p>
-        <div class="social-links">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-pinterest"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
+
+
+   <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Hexpert</h3>
+                <p>The ultimate color learning resource for designers and developers</p>
+            </div>
+            <div class="social-links">
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Hexpert. All rights reserved.</p>
         </div>
     </footer>
-
+<script src="script.js"></script>
     <script>
         // Simple search functionality
         document.getElementById('colorSearch').addEventListener('input', function() {
