@@ -1,61 +1,114 @@
-# Hexpert - Color Mastery Tool 🎨
+# 🎨 Hexpert — Master Colors Like a Pro
 
-![Hexpert Screenshot](./Assets/tools.png)
+> A premium, all-in-one color learning platform for designers, developers, and color enthusiasts. Explore 250+ colors, train with advanced quizzes, generate gradients, check contrast, and much more — all in the browser with no backend required.
 
-![Hexpert Screenshot](./Assets/colors.png)
+![Light Mode](https://img.shields.io/badge/theme-light%20%2F%20dark-blueviolet)
+![Colors](https://img.shields.io/badge/colors-250%2B-ff69b4)
+![Quiz Modes](https://img.shields.io/badge/quiz%20modes-4-orange)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-![Hexpert Screenshot](./Assets/blue.png)
-
-A lightweight web application for exploring, creating, and testing color knowledge - built with pure HTML, CSS, and JavaScript.
+---
 
 ## ✨ Features
 
-### 🎨 Color Tools
+### 🌗 Premium UI / Dark Mode
+- Glassmorphism design with frosted-glass cards
+- Animated gradient background blobs
+- One-click **Dark / Light mode** toggle (persisted in browser storage)
+- Google Fonts (Inter + JetBrains Mono), gradient headings, scroll-to-top button
+- Toast notifications for all user actions
 
-- **200+ Named Colors** with HEX codes
-- **Interactive Color Picker** with real-time HEX/RGB conversion
-- **Gradient Generator** with customizable direction and CSS output
-- **Smart Quiz System** with 3 difficulty levels
+### 🧠 Advanced Quiz (4 Modes)
 
-### 🎮 Color Quiz
+| Mode | Description |
+|---|---|
+| 🎯 Multiple Choice | Pick the name from 4 shuffled options (keyboard shortcuts 1–4) |
+| ✏️ Type Answer | Type the exact color name; press Enter to submit |
+| 🔢 Guess Hex | See the color, type its `#RRGGBB` hex code |
+| 🔄 Name → Color | Given the name, pick the correct color swatch from 4 options |
 
-- **Level 1**: Basic colors (Red, Blue, Green, etc.)
-- **Level 2**: Intermediate colors (Orchid, Coral, etc.)
-- **Level 3**: Advanced colors (Lavender, Peru, etc.)
-- **Adaptive Difficulty**: Automatically adjusts based on performance
-- **30-second Timer** per question
+- **▶ Start · ⏸ Pause / Resume · ⏹ Stop · 🔄 New Quiz** controls
+- ❤️❤️❤️ **Lives system** — 3 wrong answers ends the game
+- **Countdown timer** with animated bar (urgency turns red at 8s)
+- **3 Difficulty levels** — Easy (30s) · Medium (25s) · Hard (18s) · All (20s)
+- **Leaderboard** — top 10 scores stored in `localStorage`
+- **Stats panel** — accuracy %, best streak, total answered
 
-## 🚀 How to Use
+### 🧰 Color Tools
 
-1. **Color Picker**:
-   - Select any color to view its name and values
-   - Copy HEX/RGB codes with one click
+| Tool | What it does |
+|---|---|
+| 🎨 Color Picker | HEX / RGB / HSL / name · luminance · warm/cool · shades & tints |
+| 🌈 Gradient Generator | 3-color gradients · 5 directions · radial · Copy CSS / Tailwind class |
+| 🔁 Color Converter | Convert between HEX ↔ RGB ↔ HSL ↔ CMYK |
+| ⚖️ Contrast Checker | Live WCAG AA / AAA / AA-Large badges with preview |
+| 🎵 Harmony Generator | Complementary · Analogous · Triadic · Split · Tetradic · Monochromatic |
 
-2. **Gradient Generator**:
-   - Choose two colors and direction
-   - Get ready-to-use CSS code
+### ⭐ My Palette
+- Save favorites from any color card with ☆ Fav
+- Export your palette as **CSS custom properties** (`:root { ... }`)
+- Clear all with one click
 
-3. **Color Quiz**:
-   - Guess the color name from the swatch
-   - Earn points for correct answers
-   - Difficulty increases after 3 correct answers
+### 📚 Color Library (250+ Colors)
+- 8 categories: Reds · Blues · Greens · Purples · Yellows & Oranges · Pinks · Browns · Grays
+- **Sort by:** Name A–Z · Hue · Brightness · Default
+- **Filter by** category
+- Per-card **Harmony panel** — see complementary, analogous, and triadic harmonies inline
+- Click any card to copy its hex code
 
-## 🌈 Color Database Highlights
+### 🔍 Smart Search
+- Real-time search by color name or hex code
+- Empty sections are hidden automatically
 
-- **15 Basic Colors** (Red, Blue, Yellow, etc.)
-- **20 Intermediate Colors** (Orchid, Coral, Gold, etc.)
-- **15 Advanced Colors** (Lavender, Peru, Khaki, etc.)
-- **Custom Color Support**: Names any picked color
+---
+
+## 🚀 Getting Started
+
+No build step, no server, no dependencies.
+
+```bash
+git clone https://github.com/yourname/hexpert.git
+cd hexpert
+# Open index.html in your browser
+open index.html          # macOS
+xdg-open index.html      # Linux
+start index.html         # Windows
+```
+
+---
+
+## 📁 Project Structure
+
+```
+hexpert/
+├── index.html       # App structure — navbar, hero, tools, quiz, library, footer
+├── styles.css       # Premium CSS — glassmorphism, dark/light mode, all components
+├── script.js        # All logic — quiz engine, tools, library, search, favorites
+├── Assets/          # Any supplementary assets
+└── README.md        # This file
+```
+
+---
+
+## ⌨️ Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `1` – `4` | Select MCQ option during quiz |
+| `Enter` | Submit text / hex answer |
+| Theme toggle | Click 🌙 / ☀️ in the navbar |
+
+---
 
 ## 🛠️ Built With
 
-- Pure HTML5, CSS3, JavaScript (No frameworks)
-- CSS Variables for theming
-- Flexbox/Grid for layout
-- Font Awesome icons
+- **Vanilla HTML / CSS / JavaScript** — no frameworks, no build tools
+- [Font Awesome 6](https://fontawesome.com/) — icons
+- [Google Fonts](https://fonts.google.com/) — Inter & JetBrains Mono
+- Browser `localStorage` — persistence for theme, favorites, and scores
 
-## 📜 License
+---
 
-MIT License - Free for personal and commercial use
+## 📄 License
 
-*Developed with ❤️ by Sharan Vasoya*
+MIT © 2026 Hexpert

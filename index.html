@@ -1,1284 +1,494 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hexpert - Master Colors Like a Pro</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hexpert – Master Colors Like a Pro</title>
+  <meta name="description" content="The ultimate color learning platform. Explore 200+ colors, take advanced quizzes, generate gradients, check contrast and much more!">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>Hexpert</h1>
-            <p class="tagline">
-                Discover over 200 beautiful colors with their names and hex codes.
-                Perfect for designers, artists, and anyone who wants to expand their
-                color vocabulary and impress others with precise color knowledge!
-            </p>
-            <button id="themeToggle" class="theme-toggle">
-                <i class="fas fa-moon"></i> Dark Mode
-            </button>
-        </div>
-    </header>
 
-    <div class="search-container">
-        <div class="search-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="colorSearch" placeholder="Search colors by name or hex code...">
-            <i class="fas fa-times clear-search" id="clearSearch"></i>
+<!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">🎨 Hexpert</a>
+      <ul class="nav-links">
+        <li><a href="#palette-section">My Palette</a></li>
+        <li><a href="#tools-section">Tools</a></li>
+        <li><a href="#quiz-section">Quiz</a></li>
+        <li><a href="#library-section">Library</a></li>
+      </ul>
+      <div class="nav-right">
+        <button id="themeToggle" title="Toggle Dark / Light Mode" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-badge"><i class="fas fa-palette"></i> The Ultimate Color Platform</div>
+    <h1 class="hero-title">Master Colors<br>Like a Pro</h1>
+    <p class="hero-sub">
+      Explore 200+ beautiful colors, train your eye with advanced quizzes,
+      generate stunning gradients, and check accessibility — all in one place.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">200+</span>
+        <span class="hero-stat-label">Colors</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">4</span>
+        <span class="hero-stat-label">Quiz Modes</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">3</span>
+        <span class="hero-stat-label">Difficulty Levels</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">∞</span>
+        <span class="hero-stat-label">Gradients</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEARCH BAR
+══════════════════════════════════════ -->
+<section class="search-section">
+  <div class="container">
+    <div class="search-wrap">
+      <i class="fas fa-search search-icon-inner"></i>
+      <input type="text" id="colorSearch" placeholder="Search colors by name or hex code…" autocomplete="off">
+      <button id="clearSearch" title="Clear search"><i class="fas fa-times"></i></button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     MY PALETTE (FAVORITES)
+══════════════════════════════════════ -->
+<section id="palette-section">
+  <div class="container">
+    <div class="section-head">
+      <h2>
+        <span class="sh-icon"><i class="fas fa-star"></i></span>
+        My Palette
+      </h2>
+      <div class="palette-actions">
+        <button id="exportPalette" class="btn-sm"><i class="fas fa-download"></i> Export CSS</button>
+        <button id="clearPalette" class="btn-sm"><i class="fas fa-trash"></i> Clear</button>
+      </div>
+    </div>
+    <div class="card" style="padding:1.25rem 1.5rem;">
+      <div id="favorites-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TOOLS
+══════════════════════════════════════ -->
+<section id="tools-section">
+  <div class="container">
+    <div class="section-head">
+      <h2><span class="sh-icon"><i class="fas fa-tools"></i></span>Color Tools</h2>
+    </div>
+    <div class="tools-grid">
+
+      <!-- Color Picker -->
+      <div class="card" id="tool-picker">
+        <h3><i class="fas fa-eye-dropper" style="color:var(--hx-accent)"></i> Color Picker</h3>
+        <div style="margin-top:1rem;">
+          <input type="color" id="colorPicker" value="#7C6FF7" title="Pick a color">
+          <div class="cp-props">
+            <div class="cp-row">
+              <span class="cp-label">HEX</span>
+              <span class="cp-val" id="hexCode">#7C6FF7</span>
+              <button class="icon-btn copy-btn" data-target="hexCode" title="Copy HEX"><i class="far fa-copy"></i></button>
+            </div>
+            <div class="cp-row">
+              <span class="cp-label">RGB</span>
+              <span class="cp-val" id="rgbCode">124, 111, 247</span>
+              <button class="icon-btn copy-btn" data-target="rgbCode" title="Copy RGB"><i class="far fa-copy"></i></button>
+            </div>
+            <div class="cp-row">
+              <span class="cp-label">HSL</span>
+              <span class="cp-val" id="hslCode">244°, 89%, 70%</span>
+              <button class="icon-btn copy-btn" data-target="hslCode" title="Copy HSL"><i class="far fa-copy"></i></button>
+            </div>
+            <div class="cp-row">
+              <span class="cp-label">Name</span>
+              <span class="cp-val" id="colorName">Medium Slate Blue</span>
+            </div>
+          </div>
+          <div class="cp-extra">
+            <div class="cp-chip"><strong id="lum-val">—</strong>Luminance</div>
+            <div class="cp-chip"><strong id="warm-val">—</strong>Temperature</div>
+          </div>
+          <div style="margin-top:1rem;">
+            <div style="font-size:0.78rem;color:var(--text3);margin-bottom:0.5rem;font-weight:600;">SHADES & TINTS</div>
+            <div class="shades-row" id="shadesRow"></div>
+          </div>
         </div>
+      </div>
+
+      <!-- Gradient Generator -->
+      <div class="card" id="tool-gradient">
+        <h3><i class="fas fa-swatchbook" style="color:var(--hx-accent2)"></i> Gradient Generator</h3>
+        <div style="margin-top:1rem;">
+          <div class="gradient-preview" id="gradientPreview"></div>
+          <div class="grad-controls">
+            <div class="grad-ctrl">
+              <label>Color 1</label>
+              <input type="color" id="gradientColor1" value="#7C6FF7">
+            </div>
+            <div class="grad-ctrl">
+              <label>Color 2</label>
+              <input type="color" id="gradientColor2" value="#F77CBC">
+            </div>
+            <div class="grad-ctrl">
+              <label>Color 3</label>
+              <input type="color" id="gradientColor3" value="#F7A97C">
+            </div>
+            <div class="grad-ctrl">
+              <label>Direction</label>
+              <select id="gradientDirection">
+                <option value="to right">→ Horizontal</option>
+                <option value="to bottom">↓ Vertical</option>
+                <option value="135deg">↘ Diagonal</option>
+                <option value="to bottom right">↘ Alt Diagonal</option>
+                <option value="radial">◎ Radial</option>
+              </select>
+            </div>
+            <div class="grad-ctrl">
+              <label>Type</label>
+              <select id="gradientType">
+                <option value="linear">Linear</option>
+                <option value="mesh">Mesh</option>
+              </select>
+            </div>
+            <div class="grad-ctrl">
+              <label>Angle: <span id="angleVal">135</span>°</label>
+              <input type="range" id="gradientAngle" min="0" max="360" value="135">
+            </div>
+          </div>
+          <textarea id="cssOutput" readonly></textarea>
+          <div class="grad-actions">
+            <button id="copyGradient" class="btn-primary"><i class="far fa-copy"></i> Copy CSS</button>
+            <button id="copyTailwind" class="btn-sm"><i class="fas fa-wind"></i> Tailwind</button>
+            <button id="randomGradient" class="btn-sm"><i class="fas fa-random"></i> Random</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Advanced Color Tools -->
+      <div class="card" id="tool-advanced">
+        <h3><i class="fas fa-flask" style="color:var(--hx-accent3)"></i> Advanced Tools</h3>
+        <div class="tab-bar" style="margin-top:1rem;">
+          <button class="tab-btn active" data-tab="converter">Converter</button>
+          <button class="tab-btn" data-tab="contrast">Contrast</button>
+          <button class="tab-btn" data-tab="harmony">Harmony</button>
+        </div>
+
+        <!-- Converter tab -->
+        <div class="tab-panel active" id="tab-converter">
+          <div class="cp-props">
+            <div class="cp-row">
+              <span class="cp-label">HEX</span>
+              <input class="cp-val" id="conv-hex" placeholder="#7C6FF7" style="border:1.5px solid var(--border);background:var(--bg2);">
+            </div>
+            <div class="cp-row">
+              <span class="cp-label">RGB</span>
+              <input class="cp-val" id="conv-rgb" placeholder="124, 111, 247" style="border:1.5px solid var(--border);background:var(--bg2);">
+            </div>
+            <div class="cp-row">
+              <span class="cp-label">HSL</span>
+              <input class="cp-val" id="conv-hsl" placeholder="244, 89%, 70%" style="border:1.5px solid var(--border);background:var(--bg2);">
+            </div>
+            <div class="cp-row">
+              <span class="cp-label">CMYK</span>
+              <span class="cp-val" id="conv-cmyk">50, 55, 0, 3%</span>
+            </div>
+          </div>
+          <div style="margin-top:0.75rem;">
+            <button id="convertColors" class="btn-primary" style="width:100%"><i class="fas fa-sync"></i> Convert</button>
+          </div>
+        </div>
+
+        <!-- Contrast tab -->
+        <div class="tab-panel" id="tab-contrast">
+          <div class="contrast-wrap">
+            <div class="cp-row">
+              <span class="cp-label">Fg</span>
+              <input type="color" id="contrastFg" value="#ffffff" style="width:80px;height:36px;border:none;border-radius:8px;cursor:pointer;">
+              <span class="cp-val" id="contrastFgHex">#FFFFFF</span>
+            </div>
+            <div class="cp-row">
+              <span class="cp-label">Bg</span>
+              <input type="color" id="contrastBg" value="#7C6FF7" style="width:80px;height:36px;border:none;border-radius:8px;cursor:pointer;">
+              <span class="cp-val" id="contrastBgHex">#7C6FF7</span>
+            </div>
+            <div class="contrast-preview" id="contrastPreview">Sample Text — Aa Bb Cc</div>
+            <div class="contrast-ratio" id="contrastRatio">5.42:1</div>
+            <div class="contrast-badges" id="contrastBadges"></div>
+          </div>
+        </div>
+
+        <!-- Harmony tab -->
+        <div class="tab-panel" id="tab-harmony">
+          <div class="cp-row" style="margin-bottom:0.75rem;">
+            <span class="cp-label">Base</span>
+            <input type="color" id="harmonyBase" value="#7C6FF7" style="width:80px;height:36px;border:none;border-radius:8px;cursor:pointer;">
+            <select id="harmonyType" class="diff-select" style="flex:1;">
+              <option value="complementary">Complementary</option>
+              <option value="analogous">Analogous</option>
+              <option value="triadic">Triadic</option>
+              <option value="split">Split Complementary</option>
+              <option value="tetradic">Tetradic</option>
+              <option value="monochromatic">Monochromatic</option>
+            </select>
+          </div>
+          <div id="harmonyResult" style="display:flex;gap:6px;flex-wrap:wrap;min-height:50px;padding:0.5rem 0;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     ADVANCED QUIZ
+══════════════════════════════════════ -->
+<section id="quiz-section">
+  <div class="container">
+    <div class="section-head">
+      <h2><span class="sh-icon"><i class="fas fa-brain"></i></span>Color Quiz</h2>
+      <span class="section-badge">4 Modes • 3 Difficulties</span>
     </div>
 
-    <div class="main-container">
-        <!-- Tools Section -->
-        <section class="tools-section">
-            <div class="tool-card">
-                <h2><i class="fas fa-eye-dropper"></i> Color Picker</h2>
-                <div class="color-tool">
-                    <input type="color" id="colorPicker" value="#FF0000">
-                    <div class="color-info">
-                        <div class="color-property">
-                            <span class="property-label">Hex:</span>
-                            <span id="hexCode" class="property-value">#FF0000</span>
-                            <button class="copy-btn" data-target="hexCode">
-                                <i class="far fa-copy"></i>
-                            </button>
-                        </div>
-                        <div class="color-property">
-                            <span class="property-label">Name:</span>
-                            <span id="colorName" class="property-value">Red</span>
-                        </div>
-                        <div class="color-property">
-                            <span class="property-label">RGB:</span>
-                            <span id="rgbCode" class="property-value">255, 0, 0</span>
-                            <button class="copy-btn" data-target="rgbCode">
-                                <i class="far fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start;" id="quiz-layout">
 
-            <div class="tool-card">
-                <h2><i class="fas fa-sliders-h"></i> Gradient Generator</h2>
-                <div class="gradient-generator">
-                    <div class="gradient-preview" id="gradientPreview"></div>
-                    <div class="gradient-controls">
-                        <div class="gradient-color-picker">
-                            <label>Color 1</label>
-                            <input type="color" id="gradientColor1" value="#FF9A9E">
-                        </div>
-                        <div class="gradient-color-picker">
-                            <label>Color 2</label>
-                            <input type="color" id="gradientColor2" value="#FAD0C4">
-                        </div>
-                        <div class="gradient-direction">
-                            <label>Direction</label>
-                            <select id="gradientDirection">
-                                <option value="to right">Horizontal</option>
-                                <option value="to bottom">Vertical</option>
-                                <option value="135deg">Diagonal</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="gradient-output">
-                        <textarea id="cssOutput" readonly>background: linear-gradient(to right, #FF9A9E, #FAD0C4);</textarea>
-                        <button id="copyGradient" class="copy-gradient-btn">
-                            <i class="far fa-copy"></i> Copy CSS
-                        </button>
-                    </div>
-                </div>
-            </div>
+      <!-- Main quiz card -->
+      <div class="quiz-wrap">
+        <!-- Mode selector -->
+        <div class="quiz-mode-bar">
+          <button class="quiz-mode-btn active" data-mode="mcq">🎯 Multiple Choice</button>
+          <button class="quiz-mode-btn" data-mode="text">✏️ Type Answer</button>
+          <button class="quiz-mode-btn" data-mode="hex">🔢 Guess Hex</button>
+          <button class="quiz-mode-btn" data-mode="reverse">🔄 Name → Color</button>
+        </div>
 
-            <div class="tool-card">
-                <h2><i class="fas fa-question-circle"></i> Color Quiz</h2>
-                <div class="quiz">
-                    <div class="quiz-header">
-                        <span>Score: <span id="quizScore">0</span></span>
-                        <div id="difficultyDisplay">Difficulty: ★</div>
-                        <span id="quizTimer">30s</span>
-                    </div>
-                    <div class="quiz-color" id="quizColor"></div>
-                    <div class="quiz-controls">
-                        <input type="text" id="userGuess" placeholder="Guess the color name">
-                        <button id="submitGuess" class="quiz-btn">Submit</button>
-                    </div>
-                    <p id="quizResult"></p>
-                    <button id="newQuiz" class="quiz-btn secondary">
-                        <i class="fas fa-redo"></i> New Quiz
-                    </button>
-                </div>
-            </div>
-        </section>
+        <!-- Stats row -->
+        <div class="quiz-stats">
+          <div class="quiz-stat-pill">
+            <i class="fas fa-star" style="color:var(--warning);font-size:0.8rem;"></i>
+            Score: <span class="pill-val" id="quizScore">0</span>
+          </div>
+          <div class="quiz-stat-pill">
+            <i class="fas fa-fire" style="color:var(--danger);font-size:0.8rem;"></i>
+            Streak: <span class="pill-val" id="streakCount">0</span>
+          </div>
+          <div class="quiz-stat-pill">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">⭐</span>
+            <span id="difficultyDisplay">Easy</span>
+          </div>
+          <div class="quiz-stat-pill danger">
+            <span id="livesDisplay" class="lives-display">
+              <span class="life-heart">❤️</span>
+              <span class="life-heart">❤️</span>
+              <span class="life-heart">❤️</span>
+            </span>
+          </div>
+          <div class="quiz-stat-pill" style="margin-left:auto;">
+            <i class="fas fa-clock" style="font-size:0.8rem;"></i>
+            <span class="pill-val" id="quizTimer">30s</span>
+          </div>
+          <div>
+            <select id="difficultySelect" class="diff-select">
+              <option value="1">Easy</option>
+              <option value="2">Medium</option>
+              <option value="3">Hard</option>
+              <option value="all">All</option>
+            </select>
+          </div>
+        </div>
 
-    <div class="container">
-        <!-- Red Colors Section -->
-        <section class="color-section">
-            <h2 class="section-title">Red Colors</h2>
-            <div class="color-grid">
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF0000;">Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Red</div>
-                        <div class="color-hex">#FF0000</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DC143C;">Crimson</div>
-                    <div class="color-info">
-                        <div class="color-name">Crimson</div>
-                        <div class="color-hex">#DC143C</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #B22222;">Fire Brick</div>
-                    <div class="color-info">
-                        <div class="color-name">Fire Brick</div>
-                        <div class="color-hex">#B22222</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #8B0000;">Dark Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Red</div>
-                        <div class="color-hex">#8B0000</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF6347;">Tomato</div>
-                    <div class="color-info">
-                        <div class="color-name">Tomato</div>
-                        <div class="color-hex">#FF6347</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF4500;">Orange Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Orange Red</div>
-                        <div class="color-hex">#FF4500</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF69B4;">Hot Pink</div>
-                    <div class="color-info">
-                        <div class="color-name">Hot Pink</div>
-                        <div class="color-hex">#FF69B4</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #CD5C5C;">Indian Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Indian Red</div>
-                        <div class="color-hex">#CD5C5C</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF7F50;">Coral</div>
-                    <div class="color-info">
-                        <div class="color-name">Coral</div>
-                        <div class="color-hex">#FF7F50</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #E9967A;">Dark Salmon</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Salmon</div>
-                        <div class="color-hex">#E9967A</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FA8072;">Salmon</div>
-                    <div class="color-info">
-                        <div class="color-name">Salmon</div>
-                        <div class="color-hex">#FA8072</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFA07A;">Light Salmon</div>
-                    <div class="color-info">
-                        <div class="color-name">Light Salmon</div>
-                        <div class="color-hex">#FFA07A</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Timer bar -->
+        <div class="timer-track">
+          <div class="timer-bar" id="timerBar"></div>
+        </div>
 
-        <!-- Blue Colors Section -->
-        <section class="color-section">
-            <h2 class="section-title">Blue Colors</h2>
-            <div class="color-grid">
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #0000FF;">Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Blue</div>
-                        <div class="color-hex">#0000FF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #1E90FF;">Dodger Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Dodger Blue</div>
-                        <div class="color-hex">#1E90FF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #4169E1;">Royal Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Royal Blue</div>
-                        <div class="color-hex">#4169E1</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #4682B4;">Steel Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Steel Blue</div>
-                        <div class="color-hex">#4682B4</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #87CEEB;">Sky Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Sky Blue</div>
-                        <div class="color-hex">#87CEEB</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #00BFFF;">Deep Sky Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Deep Sky Blue</div>
-                        <div class="color-hex">#00BFFF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #191970;">Midnight Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Midnight Blue</div>
-                        <div class="color-hex">#191970</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #000080;">Navy</div>
-                    <div class="color-info">
-                        <div class="color-name">Navy</div>
-                        <div class="color-hex">#000080</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #6495ED;">Cornflower Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Cornflower Blue</div>
-                        <div class="color-hex">#6495ED</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #7B68EE;">Medium Slate Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Medium Slate Blue</div>
-                        <div class="color-hex">#7B68EE</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #6A5ACD;">Slate Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Slate Blue</div>
-                        <div class="color-hex">#6A5ACD</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #483D8B;">Dark Slate Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Slate Blue</div>
-                        <div class="color-hex">#483D8B</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #00008B;">Dark Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Blue</div>
-                        <div class="color-hex">#00008B</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #0000CD;">Medium Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Medium Blue</div>
-                        <div class="color-hex">#0000CD</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #4169E1;">Royal Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Royal Blue</div>
-                        <div class="color-hex">#4169E1</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #1E90FF;">Dodger Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Dodger Blue</div>
-                        <div class="color-hex">#1E90FF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #00BFFF;">Deep Sky Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Deep Sky Blue</div>
-                        <div class="color-hex">#00BFFF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #87CEFA;">Light Sky Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Light Sky Blue</div>
-                        <div class="color-hex">#87CEFA</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #ADD8E6;">Light Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Light Blue</div>
-                        <div class="color-hex">#ADD8E6</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #B0E0E6;">Powder Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Powder Blue</div>
-                        <div class="color-hex">#B0E0E6</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Color display -->
+        <div class="quiz-color-display" id="quizColor">
+          <span class="color-hint-text" id="colorHintText"></span>
+        </div>
 
-        <!-- Green Colors Section -->
-        <section class="color-section">
-            <h2 class="section-title">Green Colors</h2>
-            <div class="color-grid">
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #008000;">Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Green</div>
-                        <div class="color-hex">#008000</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #006400;">Dark Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Green</div>
-                        <div class="color-hex">#006400</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #2E8B57;">Sea Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Sea Green</div>
-                        <div class="color-hex">#2E8B57</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #3CB371;">Medium Sea Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Medium Sea Green</div>
-                        <div class="color-hex">#3CB371</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #20B2AA;">Light Sea Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Light Sea Green</div>
-                        <div class="color-hex">#20B2AA</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #98FB98;">Pale Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Pale Green</div>
-                        <div class="color-hex">#98FB98</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #00FF7F;">Spring Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Spring Green</div>
-                        <div class="color-hex">#00FF7F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #7CFC00;">Lawn Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Lawn Green</div>
-                        <div class="color-hex">#7CFC00</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #00FF00;">Lime</div>
-                    <div class="color-info">
-                        <div class="color-name">Lime</div>
-                        <div class="color-hex">#00FF00</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #32CD32;">Lime Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Lime Green</div>
-                        <div class="color-hex">#32CD32</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #9ACD32;">Yellow Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Yellow Green</div>
-                        <div class="color-hex">#9ACD32</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #ADFF2F;">Green Yellow</div>
-                    <div class="color-info">
-                        <div class="color-name">Green Yellow</div>
-                        <div class="color-hex">#ADFF2F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #7FFF00;">Chartreuse</div>
-                    <div class="color-info">
-                        <div class="color-name">Chartreuse</div>
-                        <div class="color-hex">#7FFF00</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #00FA9A;">Medium Spring Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Medium Spring Green</div>
-                        <div class="color-hex">#00FA9A</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #90EE90;">Light Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Light Green</div>
-                        <div class="color-hex">#90EE90</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #8FBC8F;">Dark Sea Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Sea Green</div>
-                        <div class="color-hex">#8FBC8F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #556B2F;">Dark Olive Green</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Olive Green</div>
-                        <div class="color-hex">#556B2F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #6B8E23;">Olive Drab</div>
-                    <div class="color-info">
-                        <div class="color-name">Olive Drab</div>
-                        <div class="color-hex">#6B8E23</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #808000;">Olive</div>
-                    <div class="color-info">
-                        <div class="color-name">Olive</div>
-                        <div class="color-hex">#808000</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #BDB76B;">Dark Khaki</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Khaki</div>
-                        <div class="color-hex">#BDB76B</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- MCQ mode -->
+        <div id="mcq-mode">
+          <div class="mcq-grid" id="mcqGrid"></div>
+        </div>
 
-        <!-- Purple/Violet Colors Section -->
-        <section class="color-section">
-            <h2 class="section-title">Purple & Violet Colors</h2>
-            <div class="color-grid">
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #800080;">Purple</div>
-                    <div class="color-info">
-                        <div class="color-name">Purple</div>
-                        <div class="color-hex">#800080</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #9400D3;">Dark Violet</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Violet</div>
-                        <div class="color-hex">#9400D3</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #9932CC;">Dark Orchid</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Orchid</div>
-                        <div class="color-hex">#9932CC</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #8A2BE2;">Blue Violet</div>
-                    <div class="color-info">
-                        <div class="color-name">Blue Violet</div>
-                        <div class="color-hex">#8A2BE2</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #4B0082;">Indigo</div>
-                    <div class="color-info">
-                        <div class="color-name">Indigo</div>
-                        <div class="color-hex">#4B0082</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #483D8B;">Dark Slate Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Slate Blue</div>
-                        <div class="color-hex">#483D8B</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #6A5ACD;">Slate Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Slate Blue</div>
-                        <div class="color-hex">#6A5ACD</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #7B68EE;">Medium Slate Blue</div>
-                    <div class="color-info">
-                        <div class="color-name">Medium Slate Blue</div>
-                        <div class="color-hex">#7B68EE</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #9370DB;">Medium Purple</div>
-                    <div class="color-info">
-                        <div class="color-name">Medium Purple</div>
-                        <div class="color-hex">#9370DB</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #8B008B;">Dark Magenta</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Magenta</div>
-                        <div class="color-hex">#8B008B</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF00FF;">Fuchsia</div>
-                    <div class="color-info">
-                        <div class="color-name">Fuchsia</div>
-                        <div class="color-hex">#FF00FF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DA70D6;">Orchid</div>
-                    <div class="color-info">
-                        <div class="color-name">Orchid</div>
-                        <div class="color-hex">#DA70D6</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #D8BFD8;">Thistle</div>
-                    <div class="color-info">
-                        <div class="color-name">Thistle</div>
-                        <div class="color-hex">#D8BFD8</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DDA0DD;">Plum</div>
-                    <div class="color-info">
-                        <div class="color-name">Plum</div>
-                        <div class="color-hex">#DDA0DD</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #EE82EE;">Violet</div>
-                    <div class="color-info">
-                        <div class="color-name">Violet</div>
-                        <div class="color-hex">#EE82EE</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF00FF;">Magenta</div>
-                    <div class="color-info">
-                        <div class="color-name">Magenta</div>
-                        <div class="color-hex">#FF00FF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #BA55D3;">Medium Orchid</div>
-                    <div class="color-info">
-                        <div class="color-name">Medium Orchid</div>
-                        <div class="color-hex">#BA55D3</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #9932CC;">Dark Orchid</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Orchid</div>
-                        <div class="color-hex">#9932CC</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #9400D3;">Dark Violet</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Violet</div>
-                        <div class="color-hex">#9400D3</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #8A2BE2;">Blue Violet</div>
-                    <div class="color-info">
-                        <div class="color-name">Blue Violet</div>
-                        <div class="color-hex">#8A2BE2</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Text input mode -->
+        <div id="text-mode" style="display:none;">
+          <div class="quiz-input-row">
+            <input type="text" id="userGuess" placeholder="Type the color name…" autocomplete="off">
+            <button id="submitGuess" class="quiz-btn primary"><i class="fas fa-check"></i> Submit</button>
+          </div>
+        </div>
 
-        <!-- Yellow/Orange Colors Section -->
-        <section class="color-section">
-            <h2 class="section-title">Yellow & Orange Colors</h2>
-            <div class="color-grid">
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFFF00;">Yellow</div>
-                    <div class="color-info">
-                        <div class="color-name">Yellow</div>
-                        <div class="color-hex">#FFFF00</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFD700;">Gold</div>
-                    <div class="color-info">
-                        <div class="color-name">Gold</div>
-                        <div class="color-hex">#FFD700</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFA500;">Orange</div>
-                    <div class="color-info">
-                        <div class="color-name">Orange</div>
-                        <div class="color-hex">#FFA500</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF8C00;">Dark Orange</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Orange</div>
-                        <div class="color-hex">#FF8C00</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF7F50;">Coral</div>
-                    <div class="color-info">
-                        <div class="color-name">Coral</div>
-                        <div class="color-hex">#FF7F50</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF6347;">Tomato</div>
-                    <div class="color-info">
-                        <div class="color-name">Tomato</div>
-                        <div class="color-hex">#FF6347</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF4500;">Orange Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Orange Red</div>
-                        <div class="color-hex">#FF4500</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFD700;">Gold</div>
-                    <div class="color-info">
-                        <div class="color-name">Gold</div>
-                        <div class="color-hex">#FFD700</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #F0E68C;">Khaki</div>
-                    <div class="color-info">
-                        <div class="color-name">Khaki</div>
-                        <div class="color-hex">#F0E68C</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #EEE8AA;">Pale Goldenrod</div>
-                    <div class="color-info">
-                        <div class="color-name">Pale Goldenrod</div>
-                        <div class="color-hex">#EEE8AA</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFEFD5;">Papaya Whip</div>
-                    <div class="color-info">
-                        <div class="color-name">Papaya Whip</div>
-                        <div class="color-hex">#FFEFD5</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFE4B5;">Moccasin</div>
-                    <div class="color-info">
-                        <div class="color-name">Moccasin</div>
-                        <div class="color-hex">#FFE4B5</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFDEAD;">Navajo White</div>
-                    <div class="color-info">
-                        <div class="color-name">Navajo White</div>
-                        <div class="color-hex">#FFDEAD</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #F5DEB3;">Wheat</div>
-                    <div class="color-info">
-                        <div class="color-name">Wheat</div>
-                        <div class="color-hex">#F5DEB3</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DAA520;">Goldenrod</div>
-                    <div class="color-info">
-                        <div class="color-name">Goldenrod</div>
-                        <div class="color-hex">#DAA520</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #B8860B;">Dark Goldenrod</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Goldenrod</div>
-                        <div class="color-hex">#B8860B</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #CD853F;">Peru</div>
-                    <div class="color-info">
-                        <div class="color-name">Peru</div>
-                        <div class="color-hex">#CD853F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #D2691E;">Chocolate</div>
-                    <div class="color-info">
-                        <div class="color-name">Chocolate</div>
-                        <div class="color-hex">#D2691E</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #A0522D;">Sienna</div>
-                    <div class="color-info">
-                        <div class="color-name">Sienna</div>
-                        <div class="color-hex">#A0522D</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #8B4513;">Saddle Brown</div>
-                    <div class="color-info">
-                        <div class="color-name">Saddle Brown</div>
-                        <div class="color-hex">#8B4513</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Hex guess mode -->
+        <div id="hex-mode" style="display:none;">
+          <div class="quiz-input-row">
+            <input type="text" id="hexGuess" placeholder="#RRGGBB" maxlength="7" autocomplete="off" style="flex:1;padding:0.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius-md);background:var(--bg2);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:1rem;">
+            <button id="submitHex" class="quiz-btn primary"><i class="fas fa-check"></i> Submit</button>
+          </div>
+        </div>
 
-        <!-- Pink Colors Section -->
-        <section class="color-section">
-            <h2 class="section-title">Pink Colors</h2>
-            <div class="color-grid">
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFC0CB;">Pink</div>
-                    <div class="color-info">
-                        <div class="color-name">Pink</div>
-                        <div class="color-hex">#FFC0CB</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFB6C1;">Light Pink</div>
-                    <div class="color-info">
-                        <div class="color-name">Light Pink</div>
-                        <div class="color-hex">#FFB6C1</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF69B4;">Hot Pink</div>
-                    <div class="color-info">
-                        <div class="color-name">Hot Pink</div>
-                        <div class="color-hex">#FF69B4</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF1493;">Deep Pink</div>
-                    <div class="color-info">
-                        <div class="color-name">Deep Pink</div>
-                        <div class="color-hex">#FF1493</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DB7093;">Pale Violet Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Pale Violet Red</div>
-                        <div class="color-hex">#DB7093</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #C71585;">Medium Violet Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Medium Violet Red</div>
-                        <div class="color-hex">#C71585</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF00FF;">Fuchsia</div>
-                    <div class="color-info">
-                        <div class="color-name">Fuchsia</div>
-                        <div class="color-hex">#FF00FF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF00FF;">Magenta</div>
-                    <div class="color-info">
-                        <div class="color-name">Magenta</div>
-                        <div class="color-hex">#FF00FF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DDA0DD;">Plum</div>
-                    <div class="color-info">
-                        <div class="color-name">Plum</div>
-                        <div class="color-hex">#DDA0DD</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DA70D6;">Orchid</div>
-                    <div class="color-info">
-                        <div class="color-name">Orchid</div>
-                        <div class="color-hex">#DA70D6</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #EE82EE;">Violet</div>
-                    <div class="color-info">
-                        <div class="color-name">Violet</div>
-                        <div class="color-hex">#EE82EE</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF82AB;">Light Pink Rose</div>
-                    <div class="color-info">
-                        <div class="color-name">Light Pink Rose</div>
-                        <div class="color-hex">#FF82AB</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FF6EB4;">Pink Sherbet</div>
-                    <div class="color-info">
-                        <div class="color-name">Pink Sherbet</div>
-                        <div class="color-hex">#FF6EB4</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #F64A8A;">French Rose</div>
-                    <div class="color-info">
-                        <div class="color-name">French Rose</div>
-                        <div class="color-hex">#F64A8A</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #E75480;">Dark Pink</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Pink</div>
-                        <div class="color-hex">#E75480</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DE3163;">Cerise Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Cerise Red</div>
-                        <div class="color-hex">#DE3163</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #C2185B;">Pink Raspberry</div>
-                    <div class="color-info">
-                        <div class="color-name">Pink Raspberry</div>
-                        <div class="color-hex">#C2185B</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #E30B5C;">Razzmatazz</div>
-                    <div class="color-info">
-                        <div class="color-name">Razzmatazz</div>
-                        <div class="color-hex">#E30B5C</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DB0073;">Rubine Red</div>
-                    <div class="color-info">
-                        <div class="color-name">Rubine Red</div>
-                        <div class="color-hex">#DB0073</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #CC0066;">Pink Ribbon</div>
-                    <div class="color-info">
-                        <div class="color-name">Pink Ribbon</div>
-                        <div class="color-hex">#CC0066</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Reverse mode: 4 color swatches, pick the named one -->
+        <div id="reverse-mode" style="display:none;">
+          <p style="font-size:1rem;font-weight:700;text-align:center;margin-bottom:1rem;color:var(--text);">
+            Which color is: <span id="reverseColorName" style="color:var(--hx-accent);"></span>?
+          </p>
+          <div class="mcq-grid" id="reverseGrid"></div>
+        </div>
 
-        <!-- Brown/Tan Colors Section -->
-        <section class="color-section">
-            <h2 class="section-title">Brown & Tan Colors</h2>
-            <div class="color-grid">
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #A52A2A;">Brown</div>
-                    <div class="color-info">
-                        <div class="color-name">Brown</div>
-                        <div class="color-hex">#A52A2A</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #8B4513;">Saddle Brown</div>
-                    <div class="color-info">
-                        <div class="color-name">Saddle Brown</div>
-                        <div class="color-hex">#8B4513</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #A0522D;">Sienna</div>
-                    <div class="color-info">
-                        <div class="color-name">Sienna</div>
-                        <div class="color-hex">#A0522D</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #D2691E;">Chocolate</div>
-                    <div class="color-info">
-                        <div class="color-name">Chocolate</div>
-                        <div class="color-hex">#D2691E</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #CD853F;">Peru</div>
-                    <div class="color-info">
-                        <div class="color-name">Peru</div>
-                        <div class="color-hex">#CD853F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #F4A460;">Sandy Brown</div>
-                    <div class="color-info">
-                        <div class="color-name">Sandy Brown</div>
-                        <div class="color-hex">#F4A460</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DEB887;">Burly Wood</div>
-                    <div class="color-info">
-                        <div class="color-name">Burly Wood</div>
-                        <div class="color-hex">#DEB887</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #D2B48C;">Tan</div>
-                    <div class="color-info">
-                        <div class="color-name">Tan</div>
-                        <div class="color-hex">#D2B48C</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #BC8F8F;">Rosy Brown</div>
-                    <div class="color-info">
-                        <div class="color-name">Rosy Brown</div>
-                        <div class="color-hex">#BC8F8F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #F5DEB3;">Wheat</div>
-                    <div class="color-info">
-                        <div class="color-name">Wheat</div>
-                        <div class="color-hex">#F5DEB3</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DAA520;">Goldenrod</div>
-                    <div class="color-info">
-                        <div class="color-name">Goldenrod</div>
-                        <div class="color-hex">#DAA520</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #B8860B;">Dark Goldenrod</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Goldenrod</div>
-                        <div class="color-hex">#B8860B</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #CD853F;">Peru</div>
-                    <div class="color-info">
-                        <div class="color-name">Peru</div>
-                        <div class="color-hex">#CD853F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #D2691E;">Chocolate</div>
-                    <div class="color-info">
-                        <div class="color-name">Chocolate</div>
-                        <div class="color-hex">#D2691E</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #8B4513;">Saddle Brown</div>
-                    <div class="color-info">
-                        <div class="color-name">Saddle Brown</div>
-                        <div class="color-hex">#8B4513</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #A0522D;">Sienna</div>
-                    <div class="color-info">
-                        <div class="color-name">Sienna</div>
-                        <div class="color-hex">#A0522D</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #800000;">Maroon</div>
-                    <div class="color-info">
-                        <div class="color-name">Maroon</div>
-                        <div class="color-hex">#800000</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #654321;">Dark Brown</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Brown</div>
-                        <div class="color-hex">#654321</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #5D3954;">Dark Byzantium</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Byzantium</div>
-                        <div class="color-hex">#5D3954</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #3D2B1F;">Bistre Brown</div>
-                    <div class="color-info">
-                        <div class="color-name">Bistre Brown</div>
-                        <div class="color-hex">#3D2B1F</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Result & controls -->
+        <p id="quizResult"></p>
+        <div class="quiz-controls">
+          <button id="startQuizBtn" class="quiz-btn primary"><i class="fas fa-play"></i> Start</button>
+          <button id="pauseQuizBtn" class="quiz-btn secondary" style="display:none;"><i class="fas fa-pause"></i> Pause</button>
+          <button id="stopQuizBtn"  class="quiz-btn danger-btn" style="display:none;"><i class="fas fa-stop"></i> Stop</button>
+          <button id="newQuizBtn"   class="quiz-btn secondary" style="display:none;"><i class="fas fa-redo"></i> New Quiz</button>
+          <span style="font-size:0.78rem;color:var(--text3);margin-left:auto;">
+            Press <kbd>1</kbd>-<kbd>4</kbd> for MCQ • <kbd>Enter</kbd> to submit
+          </span>
+        </div>
+      </div>
 
-        <!-- White/Gray/Black Colors Section -->
-        <section class="color-section">
-            <h2 class="section-title">White, Gray & Black Colors</h2>
-            <div class="color-grid">
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #FFFFFF; color: #333;">White</div>
-                    <div class="color-info">
-                        <div class="color-name">White</div>
-                        <div class="color-hex">#FFFFFF</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #F5F5F5; color: #333;">White Smoke</div>
-                    <div class="color-info">
-                        <div class="color-name">White Smoke</div>
-                        <div class="color-hex">#F5F5F5</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #DCDCDC; color: #333;">Gainsboro</div>
-                    <div class="color-info">
-                        <div class="color-name">Gainsboro</div>
-                        <div class="color-hex">#DCDCDC</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #C0C0C0; color: #333;">Silver</div>
-                    <div class="color-info">
-                        <div class="color-name">Silver</div>
-                        <div class="color-hex">#C0C0C0</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #A9A9A9; color: #333;">Dark Gray</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Gray</div>
-                        <div class="color-hex">#A9A9A9</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #808080; color: #fff;">Gray</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray</div>
-                        <div class="color-hex">#808080</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #696969; color: #fff;">Dim Gray</div>
-                    <div class="color-info">
-                        <div class="color-name">Dim Gray</div>
-                        <div class="color-hex">#696969</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #778899; color: #fff;">Light Slate Gray</div>
-                    <div class="color-info">
-                        <div class="color-name">Light Slate Gray</div>
-                        <div class="color-hex">#778899</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #708090; color: #fff;">Slate Gray</div>
-                    <div class="color-info">
-                        <div class="color-name">Slate Gray</div>
-                        <div class="color-hex">#708090</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #2F4F4F; color: #fff;">Dark Slate Gray</div>
-                    <div class="color-info">
-                        <div class="color-name">Dark Slate Gray</div>
-                        <div class="color-hex">#2F4F4F</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #000000; color: #fff;">Black</div>
-                    <div class="color-info">
-                        <div class="color-name">Black</div>
-                        <div class="color-hex">#000000</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #080808; color: #fff;">Gray 1</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 1</div>
-                        <div class="color-hex">#080808</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #101010; color: #fff;">Gray 2</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 2</div>
-                        <div class="color-hex">#101010</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #181818; color: #fff;">Gray 3</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 3</div>
-                        <div class="color-hex">#181818</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #202020; color: #fff;">Gray 4</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 4</div>
-                        <div class="color-hex">#202020</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #282828; color: #fff;">Gray 5</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 5</div>
-                        <div class="color-hex">#282828</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #303030; color: #fff;">Gray 6</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 6</div>
-                        <div class="color-hex">#303030</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #383838; color: #fff;">Gray 7</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 7</div>
-                        <div class="color-hex">#383838</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #404040; color: #fff;">Gray 8</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 8</div>
-                        <div class="color-hex">#404040</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #484848; color: #fff;">Gray 9</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 9</div>
-                        <div class="color-hex">#484848</div>
-                    </div>
-                </div>
-                <div class="color-card">
-                    <div class="color-display" style="background-color: #505050; color: #fff;">Gray 10</div>
-                    <div class="color-info">
-                        <div class="color-name">Gray 10</div>
-                        <div class="color-hex">#505050</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <!-- Sidebar: Leaderboard -->
+      <div>
+        <div class="card" style="padding:1.25rem;">
+          <div class="section-head" style="margin-bottom:0.75rem;">
+            <h3 style="font-size:1rem;"><i class="fas fa-trophy" style="color:var(--warning);"></i> Leaderboard</h3>
+            <button id="clearScores" class="btn-sm" style="font-size:0.72rem;padding:0.25rem 0.6rem;">Clear</button>
+          </div>
+          <table class="leaderboard-table">
+            <thead>
+              <tr><th>#</th><th>Score</th><th>Mode</th><th>Date</th></tr>
+            </thead>
+            <tbody id="leaderboardBody">
+              <tr><td colspan="4" style="text-align:center;color:var(--text3);font-style:italic;font-size:0.82rem;">No scores yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="padding:1.25rem;margin-top:1.25rem;">
+          <h3 style="font-size:1rem;margin-bottom:0.75rem;"><i class="fas fa-chart-bar" style="color:var(--hx-accent);"></i> Stats</h3>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <div class="cp-chip"><strong id="stat-total">0</strong>Total Answered</div>
+            <div class="cp-chip"><strong id="stat-correct">0</strong>Correct</div>
+            <div class="cp-chip"><strong id="stat-accuracy">—</strong>Accuracy</div>
+            <div class="cp-chip"><strong id="stat-best">0</strong>Best Streak</div>
+          </div>
+          <button id="clearStats" class="btn-sm" style="width:100%;margin-top:0.75rem;"><i class="fas fa-trash"></i> Reset Stats</button>
+        </div>
+      </div>
+
+    </div><!-- /quiz-layout -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     COLOR LIBRARY
+══════════════════════════════════════ -->
+<section id="library-section">
+  <div class="container">
+    <div class="section-head">
+      <h2><span class="sh-icon"><i class="fas fa-swatchbook"></i></span>Color Library</h2>
     </div>
-    
+    <div class="lib-toolbar">
+      <select id="sortColors" class="lib-select">
+        <option value="default">Sort: Default</option>
+        <option value="name">Sort: Name A–Z</option>
+        <option value="hue">Sort: By Hue</option>
+        <option value="brightness">Sort: Brightness</option>
+      </select>
+      <select id="filterCategory" class="lib-select">
+        <option value="all">All Categories</option>
+        <option value="red">Reds</option>
+        <option value="blue">Blues</option>
+        <option value="green">Greens</option>
+        <option value="purple">Purples</option>
+        <option value="yellow">Yellows & Oranges</option>
+        <option value="pink">Pinks</option>
+        <option value="brown">Browns</option>
+        <option value="gray">Grays</option>
+      </select>
+    </div>
+    <div id="colorLibrary"></div>
+  </div>
+</section>
 
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">🎨 Hexpert</div>
+        <p class="footer-desc">The ultimate color learning resource for designers, developers, artists, and anyone who wants to master the language of color.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Features</h4>
+        <ul>
+          <li><a href="#tools-section">Color Picker</a></li>
+          <li><a href="#tools-section">Gradient Generator</a></li>
+          <li><a href="#tools-section">Contrast Checker</a></li>
+          <li><a href="#quiz-section">Color Quiz</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Library</h4>
+        <ul>
+          <li><a href="#library-section">Red Colors</a></li>
+          <li><a href="#library-section">Blue Colors</a></li>
+          <li><a href="#library-section">Green Colors</a></li>
+          <li><a href="#library-section">All Colors</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Hexpert. Crafted with ❤️ for color lovers everywhere.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+        <a href="#" aria-label="Github"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-   <footer>
-        <div class="footer-content">
-            <div class="footer-info">
-                <h3>Hexpert</h3>
-                <p>The ultimate color learning resource for designers and developers</p>
-            </div>
-            <div class="social-links">
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 Hexpert. All rights reserved.</p>
-        </div>
-    </footer>
+<!-- Scroll to top -->
+<button id="scrollTop" title="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
 <script src="script.js"></script>
-    <script>
-        // Simple search functionality
-        document.getElementById('colorSearch').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const colorCards = document.querySelectorAll('.color-card');
-            
-            colorCards.forEach(card => {
-                const colorName = card.querySelector('.color-name').textContent.toLowerCase();
-                const colorHex = card.querySelector('.color-hex').textContent.toLowerCase();
-                
-                if (colorName.includes(searchTerm) || colorHex.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 </html>
